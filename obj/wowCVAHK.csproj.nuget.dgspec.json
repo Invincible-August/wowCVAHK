@@ -43,6 +43,10 @@
       "frameworks": {
         "net48": {
           "dependencies": {
+            "Emgu.CV": {
+              "target": "Package",
+              "version": "[4.9.0.5494, )"
+            },
             "Emgu.CV.Bitmap": {
               "target": "Package",
               "version": "[4.9.0.5494, )"

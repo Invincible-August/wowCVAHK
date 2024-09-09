@@ -2348,6 +2348,7 @@
   },
   "projectFileDependencyGroups": {
     ".NETFramework,Version=v4.8": [
+      "Emgu.CV >= 4.9.0.5494",
       "Emgu.CV.Bitmap >= 4.9.0.5494",
       "Emgu.CV.UI >= 4.9.0.5494",
       "Emgu.CV.runtime.windows >= 4.9.0.5494"
@@ -2396,6 +2397,10 @@
     "frameworks": {
       "net48": {
         "dependencies": {
+          "Emgu.CV": {
+            "target": "Package",
+            "version": "[4.9.0.5494, )"
+          },
           "Emgu.CV.Bitmap": {
             "target": "Package",
             "version": "[4.9.0.5494, )"
