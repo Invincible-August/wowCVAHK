@@ -1,0 +1,77 @@
+{
+  "format": 1,
+  "restore": {
+    "E:\\Download\\github\\wowCVAHK\\wowCVAHK.csproj": {}
+  },
+  "projects": {
+    "E:\\Download\\github\\wowCVAHK\\wowCVAHK.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "E:\\Download\\github\\wowCVAHK\\wowCVAHK.csproj",
+        "projectName": "wowCVAHK",
+        "projectPath": "E:\\Download\\github\\wowCVAHK\\wowCVAHK.csproj",
+        "packagesPath": "C:\\Users\\augus\\.nuget\\packages\\",
+        "outputPath": "E:\\Download\\github\\wowCVAHK\\obj\\",
+        "projectStyle": "PackageReference",
+        "skipContentFileWrite": true,
+        "fallbackFolders": [
+          "E:\\Tools\\Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\augus\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net48"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net48": {
+            "projectReferences": {}
+          }
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net48": {
+          "dependencies": {
+            "Emgu.CV.Bitmap": {
+              "target": "Package",
+              "version": "[4.9.0.5494, )"
+            },
+            "Emgu.CV.UI": {
+              "target": "Package",
+              "version": "[4.9.0.5494, )"
+            },
+            "Emgu.CV.runtime.windows": {
+              "target": "Package",
+              "version": "[4.9.0.5494, )"
+            }
+          }
+        }
+      },
+      "runtimes": {
+        "win": {
+          "#import": []
+        },
+        "win-arm64": {
+          "#import": []
+        },
+        "win-x64": {
+          "#import": []
+        },
+        "win-x86": {
+          "#import": []
+        }
+      }
+    }
+  }
+}
