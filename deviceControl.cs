@@ -56,18 +56,26 @@ namespace wowCVAHK
         // 向Arduino发送命令
         internal static void SendCommandToArduino(string port, string command)
         {
+            SerialPort serialPort = null;
             try
             {
-                using (SerialPort serialPort = new SerialPort(port, 9600))
-                {
-                    serialPort.Open();
-                    serialPort.WriteLine(command);  // 发送指令给Arduino
-                    Console.WriteLine($"已向Arduino发送指令: {command}");
-                }
+                Console.WriteLine($"port is {port}");
+                serialPort = new SerialPort(port, 9600);
+                serialPort.Open();
+                serialPort.Write(command);  // 发送指令给Arduino
+                Console.WriteLine($"已向Arduino发送指令: {command}");
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"发送命令失败: {ex.Message}");
+                Console.WriteLine($"发送命令失败: {ex.Message}");                
+            }
+            finally
+            {
+                // 确保在程序结束时关闭串口
+                if (serialPort != null && serialPort.IsOpen)
+                {
+                    serialPort.Close();
+                }
             }
         }
     }

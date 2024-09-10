@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO.Ports;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
@@ -28,17 +29,6 @@ namespace wowCVAHK
 
         internal static void ColorBindKey(string colorInfo, string keyInfo)
         {
-
-            if (colorInfo == "" || keyInfo == "")
-            {
-                Console.WriteLine("colorInfo or keyInfo == 空");
-                return;
-            }
-            else
-            {
-                Console.WriteLine("colorInfo != null");
-                Console.WriteLine($"type colorInfo == {colorInfo.GetType()}");
-            }
             IniFile.saveIni(colorInfo, keyInfo);
         }
 
@@ -46,10 +36,10 @@ namespace wowCVAHK
         {
             ControlForm.stopFlag = false;
             ControlForm.workerThread = new Thread(new ThreadStart(runningThreadMethod));
-            ControlForm.workerThread.Start();            
+            ControlForm.workerThread.Start();
         }
 
-        internal static void bindCOM(string deviceCOM) 
+            internal static void bindCOM(string deviceCOM) 
         {            
             IniFile.saveIni("deviceCOM", deviceCOM.ToUpper());            
         }
@@ -67,7 +57,8 @@ namespace wowCVAHK
             string[] locationParts = ini.Get("coordinate").Split(',');  // 获取坐标
             int coordX = int.Parse(locationParts[0]);
             int coordY = int.Parse(locationParts[1]);
-            string arduinoPort = ini.Get("coordinate");
+            string arduinoPort = ini.Get("deviceCOM");
+            Console.WriteLine($"arduinoPort == {arduinoPort}");
             // 读取所有 RGB 与对应结果的映射
             Dictionary<string, string> colorMappings = ini.GetConfMappings();
 
@@ -89,51 +80,55 @@ namespace wowCVAHK
             int times = 0;
 
             while (!ControlForm.stopFlag)
-            {
+            {   
                 stopwatch.Start(); // 开始计时 
                 bool startCheck = false;
 
-                IntPtr foregroundWindow = BaseAPI.GetForegroundWindow();
+                IntPtr foregroundWindow = BaseAPI.GetForegroundWindow();                
 
-                IntPtr hWnd = new IntPtr(intWindowId);
+                IntPtr hWnd = new IntPtr(intWindowId);                
 
                 if (hWnd == foregroundWindow)
                 {
-                    startCheck = true;
+                    startCheck = true;                    
                 }
                 else
                 {
-
                     startCheck = false;
                 }
 
                 if (startCheck)
                 {
                     Point checkPosition = new Point(coordX, coordY);
-
-
                     Color checkColor = Utils.GetColorAt(checkPosition);
 
-                    string colorText = $"{checkColor.R},{checkColor.G},{checkColor.B}";
+                    float currentHue, currentSaturation, currentValue;
+                    Utils.RgbToHsv(checkColor, out currentHue, out currentSaturation, out currentValue);
 
-                    Console.WriteLine($"colorText = {colorText}");
+                    string HSV = $"{currentHue},{currentSaturation},{currentValue}";                    
+                    
 
                     foreach (var colorMapping in colorMappings)
-                    {
-                        if (colorMapping.Key == colorText)
+                    {                        
+                        if (Utils.ValidateHSV(colorMapping.Key))
                         {
-                            //执行下发到硬件的控制函数
-                            Console.WriteLine(colorMapping.Value);
-                            Console.WriteLine($"times = {times+=1}");
-                            
-                            DeviceControl.SendCommandToArduino(arduinoPort, colorMapping.Value);
+                            string[] parts = colorMapping.Key.Split(',');
+                            if (Utils.IsHsvWithinTolerance(currentHue, currentSaturation, currentValue, float.Parse(parts[0]), float.Parse(parts[1]), float.Parse(parts[2])))
+                            {
+                                Console.WriteLine("判断通过");
+                                //执行下发到硬件的控制函数
+                                Console.WriteLine(colorMapping.Value);
+                                Console.WriteLine($"times = {times += 1}");
+
+                                DeviceControl.SendCommandToArduino(arduinoPort, colorMapping.Value);
+                            }
                         }
                     }
                 }
 
                 stopwatch.Stop(); // 停止计时 
                 long elapsedMilliseconds = stopwatch.ElapsedMilliseconds;
-                int delay = 300 - (int)elapsedMilliseconds; // 计算剩余时间以保持至少100毫秒的迭代时间
+                int delay = 100 - (int)elapsedMilliseconds; // 计算剩余时间以保持至少100毫秒的迭代时间
                 if (delay > 0)
                 {
                     Thread.Sleep(delay); // 如果实际操作时间小于100毫秒，则等待剩余时间  

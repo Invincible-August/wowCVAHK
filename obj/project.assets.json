@@ -2356,20 +2356,20 @@
   },
   "packageFolders": {
     "C:\\Users\\augus\\.nuget\\packages\\": {},
-    "F:\\VisualStudioEdition\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "E:\\Tools\\Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "F:\\Downloads\\github\\wowCVAHK\\wowCVAHK.csproj",
+      "projectUniqueName": "E:\\Download\\github\\wowCVAHK\\wowCVAHK.csproj",
       "projectName": "wowCVAHK",
-      "projectPath": "F:\\Downloads\\github\\wowCVAHK\\wowCVAHK.csproj",
+      "projectPath": "E:\\Download\\github\\wowCVAHK\\wowCVAHK.csproj",
       "packagesPath": "C:\\Users\\augus\\.nuget\\packages\\",
-      "outputPath": "F:\\Downloads\\github\\wowCVAHK\\obj\\",
+      "outputPath": "E:\\Download\\github\\wowCVAHK\\obj\\",
       "projectStyle": "PackageReference",
       "skipContentFileWrite": true,
       "fallbackFolders": [
-        "F:\\VisualStudioEdition\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        "E:\\Tools\\Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
         "C:\\Users\\augus\\AppData\\Roaming\\NuGet\\NuGet.Config",

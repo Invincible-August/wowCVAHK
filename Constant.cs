@@ -13,5 +13,10 @@
 
         internal const int LOGPIXELSX = 88; // DPI x轴
         internal const int LOGPIXELSY = 90; // DPI y轴
+
+        // 定义容差值
+        internal const float HUETOLERANCE = 15.0f; // 色调容差
+        internal const float SATURATIONTOLERANCE = 0.1f; // 饱和度容差
+        internal const float VALUETOLERANCE = 0.1f; // 明度容差
     }
 }

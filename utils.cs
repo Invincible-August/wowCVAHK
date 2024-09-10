@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Linq;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace wowCVAHK
@@ -122,9 +124,7 @@ namespace wowCVAHK
             Size phisicalRect = DESKTOP;
             Bitmap tSrcBmp = new Bitmap(phisicalRect.Width, phisicalRect.Height); // 用于屏幕原始图片保存
             Graphics gp = Graphics.FromImage(tSrcBmp);
-            gp.CopyFromScreen(0, 0, 0, 0, phisicalRect);
-
-            Console.WriteLine($"viewRect.Size = {viewRect.Size}, phisicalRect = {phisicalRect}");
+            gp.CopyFromScreen(0, 0, 0, 0, phisicalRect);         
 
             if (viewRect.Size != phisicalRect)
             {
@@ -141,20 +141,58 @@ namespace wowCVAHK
 
         }
 
-        // 获取屏幕某个点的颜色
         internal static Color GetColorAt(Point location)
         {
-            using (Bitmap bmp = new Bitmap(1, 1))
+            Bitmap screenImage = GetScreenImage();
+            
+
+            // 检查给定坐标是否在图像范围内
+            if (location.X >= 0 && location.X < screenImage.Width && location.Y >= 0 && location.Y < screenImage.Height)
             {
-                using (Graphics g = Graphics.FromImage(bmp))
-                {
-                    g.CopyFromScreen(location, Point.Empty, new Size(1, 1));
-                }
-                return bmp.GetPixel(0, 0);
+                // 从返回的图像中获取指定位置的颜色
+                return screenImage.GetPixel(location.X, location.Y);
+            }
+            else
+            {
+                throw new ArgumentOutOfRangeException("location", "指定的坐标不在图像范围内");
             }
         }
+
+        internal static void RgbToHsv(Color color, out float hue, out float saturation, out float value)
+        {
+            hue = color.GetHue();
+            saturation = color.GetSaturation();
+            value = color.GetBrightness();
+        }
+
+        internal static bool IsHsvWithinTolerance(float currentHue, float currentSaturation, float currentValue, float initialHue, float initialSaturation, float initialValue)
+        {
+            Console.WriteLine($"currentHue = {currentHue}, initialHue = {initialHue}, currentSaturation = {currentSaturation}, initialSaturation = {initialSaturation}, currentValue = {currentValue}, initialValue = {initialValue}");
+
+            return Math.Abs(currentHue - initialHue) <= Constant.HUETOLERANCE &&
+                   Math.Abs(currentSaturation - initialSaturation) <= Constant.SATURATIONTOLERANCE &&
+                   Math.Abs(currentValue - initialValue) <= Constant.VALUETOLERANCE;
+        }
+
+        internal static bool ValidateHSV(string hsv)
+        {
+            //验证RGB的格式是否正确
+            string[] parts = hsv.Split(',');
+
+            if (parts.Length != 3) return false;
+
+            foreach (string part in parts)
+            {
+                if (!float.TryParse(part, out float value))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
     }
-        internal class IniFile
+
+    internal class IniFile
         {
             private Dictionary<string, string> data = new Dictionary<string, string>();
 
@@ -192,8 +230,9 @@ namespace wowCVAHK
             }
 
             internal static void saveIni(string key, string value)
-            {
-                if (ValidateRGB(key) && !string.IsNullOrWhiteSpace(value))
+            {   
+                
+                if (Utils.ValidateHSV(key) && !string.IsNullOrWhiteSpace(value))
                 {
                     IniFile ini = new IniFile(Constant.INI_FILE_PATH);
                     // 读取所有映射
@@ -203,21 +242,18 @@ namespace wowCVAHK
                     //******************** 校验 ********************
                     if (colorMappings.ContainsKey(key))
                     {
-                        colorMappings[key] = value.ToUpper();
+                        colorMappings.Remove(key);
+
                     }
-                    else if (colorMappings.ContainsValue(value))
+
+                    var keyToRemove = colorMappings.FirstOrDefault(kvp => kvp.Value == value.ToUpper()).Key;
+                    if (keyToRemove != null)
                     {
-                        string existingKey = FindKeyByValue(colorMappings, value);
-                        if (existingKey != null)
-                        {
-                            colorMappings.Remove(existingKey);
-                        }
-                        colorMappings[key] = value.ToUpper();
+                        colorMappings.Remove(keyToRemove);                        
                     }
-                    else
-                    {
-                        colorMappings[key] = value.ToUpper();
-                    }
+
+                    colorMappings.Add(key, value.ToUpper());
+                
                     WriteIniFile(colorMappings); // 保存到 INI 文件
 
                 }
@@ -266,77 +302,57 @@ namespace wowCVAHK
                         writer.WriteLine($"{entry.Key} = {entry.Value}");
                     }
                 }
-            }
+            }            
+    }
 
-            internal static bool ValidateRGB(string rgb)
-            {
-                //验证RGB的格式是否正确
-                string[] parts = rgb.Split(',');
-
-                if (parts.Length != 3) return false;
-
-                foreach (string part in parts)
-                {
-                    if (!int.TryParse(part, out int value) || value < 0 || value > 255)
-                    {
-                        return false;
-                    }
-                }
-
-                return true;
-            }
-        }
-
-        internal class FullScreenOverlay : Form
+    internal class FullScreenOverlay : Form
         {
             private Point mousePosition;
             private Bitmap screenCapture;
             public FullScreenOverlay()
             {
-                this.DoubleBuffered = true;
-                this.FormBorderStyle = FormBorderStyle.None;
-                this.WindowState = FormWindowState.Maximized;
-                this.BackColor = Color.Black;
-                this.Opacity = 0.5;  // 设置半透明效果
-                this.TopMost = true;
+            this.DoubleBuffered = true;
+            this.FormBorderStyle = FormBorderStyle.None;
+            this.WindowState = FormWindowState.Maximized;
+            this.BackColor = Color.Black;
+            this.Opacity = 0.5;  // 设置半透明效果
+            this.TopMost = true;
 
-                // 截取整个屏幕
-                screenCapture = CaptureScreen();
-                string filePath = "screenshot.jpg";
-                screenCapture.Save(filePath);
+            // 截取整个屏幕
+            screenCapture = CaptureScreen();
 
-                this.MouseMove += new MouseEventHandler(OnMouseMove); // 监听鼠标移动事件
-                this.MouseDoubleClick += new MouseEventHandler(OnMouseDoubleClick); // 监听双击事件
+            this.MouseMove += new MouseEventHandler(OnMouseMove); // 监听鼠标移动事件
+            this.MouseDoubleClick += new MouseEventHandler(OnMouseDoubleClick); // 监听双击事件
             }
 
-            private void OnMouseMove(object sender, MouseEventArgs e)
+        private void OnMouseMove(object sender, MouseEventArgs e)
+        {
+            mousePosition = e.Location; // 更新鼠标位置
+            this.Invalidate(); // 重新绘制窗口，显示不透明方块
+        }
+
+        //重写OnPaint方法，绘制非透明10x10方块
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            base.OnPaint(e);
+
+            int rectSize = 25;
+            Rectangle rect = new Rectangle(mousePosition.X - rectSize / 2, mousePosition.Y - rectSize / 2, rectSize, rectSize);
+
+            if (screenCapture != null)
             {
-                mousePosition = e.Location; // 更新鼠标位置
-                this.Invalidate(); // 重新绘制窗口，显示不透明方块
+                // 只绘制框内部分
+                e.Graphics.DrawImage(screenCapture, rect, rect, GraphicsUnit.Pixel);
             }
 
-            // 重写OnPaint方法，绘制非透明10x10方块
-            protected override void OnPaint(PaintEventArgs e)
+            // 绘制绿色边框
+            using (Pen greenPen = new Pen(Color.Green, 2))
             {
-                base.OnPaint(e);
-
-                int rectSize = 100;
-                Rectangle rect = new Rectangle(mousePosition.X - rectSize / 2, mousePosition.Y - rectSize / 2, rectSize, rectSize);
-
-                if (screenCapture != null)
-                {
-                    // 只绘制框内部分
-                    e.Graphics.DrawImage(screenCapture, rect, rect, GraphicsUnit.Pixel);
-                }
-
-                // 绘制绿色边框
-                using (Pen greenPen = new Pen(Color.Green, 2))
-                {
-                    e.Graphics.DrawRectangle(greenPen, rect); // 画绿色边框
-                }
+                e.Graphics.DrawRectangle(greenPen, rect); // 画绿色边框
             }
+        }
 
-            private Bitmap CaptureScreen()
+        private Bitmap CaptureScreen()
             {
                 return screenCapture = Utils.GetScreenImage();              
             }
@@ -344,17 +360,19 @@ namespace wowCVAHK
             // 获取鼠标双击位置和颜色
             private void OnMouseDoubleClick(object sender, MouseEventArgs e)
             {
+                float initialHue, initialSaturation, initialValue;
                 Point clickedPosition = e.Location;
 
                 // 将屏幕坐标转换为窗口内的坐标
-                Point ClientLocation = Utils.ChangeCoordinate(clickedPosition);
+                Point ClientLocation = Utils.ChangeCoordinate(clickedPosition);                
 
-                IniFile.saveIni("coordinate", $"{ClientLocation.X},{ClientLocation.Y}");
+                IniFile.saveIni("coordinate", $"{clickedPosition.X},{clickedPosition.Y}");
 
 
                 // 获取屏幕坐标的颜色
                 Color clickedColor = Utils.GetColorAt(clickedPosition);
-
+                Utils.RgbToHsv(clickedColor, out initialHue, out initialSaturation, out initialValue);
+            
                 // 关闭全屏窗口
                 this.Close();
 
@@ -362,20 +380,21 @@ namespace wowCVAHK
                 ControlForm mainForm = Application.OpenForms["ControlForm"] as ControlForm;
                 if (mainForm != null)
                 {
-                    mainForm.DisplayClickedColorInfo(clickedColor);
+                    mainForm.DisplayClickedColorInfo(initialHue, initialSaturation, initialValue);
                     mainForm.DisplayClickedCoordinateInfo(ClientLocation);
                 }
             }
-
             
-        }
+
+
+    }
 
         public partial class ControlForm : Form
         {
-            public void DisplayClickedColorInfo(Color color)
+            public void DisplayClickedColorInfo(float initialHue, float initialSaturation, float initialValue)
             {
                 // 在文本框中显示颜色信息
-                txtColor.Text = $"{color.R},{color.G},{color.B}";
+                txtColor.Text = $"{initialHue},{initialSaturation},{initialValue}";
             }
 
             public void DisplayClickedWindowHandleInfo(string title)
