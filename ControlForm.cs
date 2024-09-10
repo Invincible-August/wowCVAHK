@@ -1,15 +1,19 @@
 ﻿using System;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace wowCVAHK
 {
     public partial class ControlForm : Form
     {
+        public static Thread workerThread;
+        public static bool stopFlag = false;
         public ControlForm()
         {
             InitializeComponent();
-            BaseAPI.RegisterHotKey(this.Handle, 1, Constant.MOD_ALT | Constant.MOD_CONTROL | Constant.MOD_SHIFT, (int)Keys.F); //注册快捷键
-            BaseAPI.RegisterHotKey(this.Handle, 2, Constant.MOD_ALT | Constant.MOD_CONTROL | Constant.MOD_SHIFT, (int)Keys.G);
+            BaseAPI.RegisterHotKey(this.Handle, 1, Constant.MOD_ALT | Constant.MOD_CONTROL | Constant.MOD_SHIFT, (int)Keys.A); //注册快捷键
+            BaseAPI.RegisterHotKey(this.Handle, 2, Constant.MOD_ALT | Constant.MOD_CONTROL | Constant.MOD_SHIFT, (int)Keys.S);
+            BaseAPI.RegisterHotKey(this.Handle, 3, Constant.MOD_ALT | Constant.MOD_CONTROL | Constant.MOD_SHIFT, (int)Keys.D);
         }
 
         protected override void WndProc(ref Message m)
@@ -26,6 +30,10 @@ namespace wowCVAHK
                     case 2:
                         // 热键 Shift+Ctrl+Alt+G 触发，调用获取窗口信息函数
                         btnGetColor.PerformClick();
+                        break;
+                    case 3:
+                        // 热键 Shift+Ctrl+Alt+G 触发，调用获取窗口信息函数
+                        stopRunning.PerformClick();
                         break;
                 }
             }
@@ -55,8 +63,24 @@ namespace wowCVAHK
         }
 
         private void stratRunning_Click(object sender, EventArgs e)
-        {
+        {            
             ButtonControl.running();
+        }
+
+        private void stopRunning_Click(object sender, EventArgs e)
+        {
+            ButtonControl.stop();
+        }
+
+        private void txtCom_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void bindCom_Click(object sender, EventArgs e)
+        {
+            string COMInfo = txtCom.Text;
+            ButtonControl.bindCOM(COMInfo);
         }
     }
 }

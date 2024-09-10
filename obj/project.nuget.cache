@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "JflFnLH6EFs=",
+  "dgSpecHash": "u9piwjY6+xc=",
   "success": true,
-  "projectFilePath": "E:\\Download\\github\\wowCVAHK\\wowCVAHK.csproj",
+  "projectFilePath": "F:\\Downloads\\github\\wowCVAHK\\wowCVAHK.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\augus\\.nuget\\packages\\emgu.cv\\4.9.0.5494\\emgu.cv.4.9.0.5494.nupkg.sha512",
     "C:\\Users\\augus\\.nuget\\packages\\emgu.cv.bitmap\\4.9.0.5494\\emgu.cv.bitmap.4.9.0.5494.nupkg.sha512",

@@ -31,11 +31,13 @@ namespace wowCVAHK
                 bitmap.PixelFormat
             );
 
+            Console.WriteLine(new Mat(bitmapData.Height, bitmapData.Width, DepthType.Cv8U, 3));
+
             // 使用 EmguCV 构造函数从 Bitmap 数据转换为 Mat
             CvInvoke.Imdecode(new Mat(bitmapData.Height, bitmapData.Width, DepthType.Cv8U, 3), ImreadModes.Color, mat);
 
             // 解锁 Bitmap 数据
-            bitmap.UnlockBits(bitmapData);
+            //bitmap.UnlockBits(bitmapData);
         }
 
         internal static void EnterSelectionMode()
@@ -138,6 +140,19 @@ namespace wowCVAHK
             }
 
         }
+
+        // 获取屏幕某个点的颜色
+        internal static Color GetColorAt(Point location)
+        {
+            using (Bitmap bmp = new Bitmap(1, 1))
+            {
+                using (Graphics g = Graphics.FromImage(bmp))
+                {
+                    g.CopyFromScreen(location, Point.Empty, new Size(1, 1));
+                }
+                return bmp.GetPixel(0, 0);
+            }
+        }
     }
         internal class IniFile
         {
@@ -206,7 +221,7 @@ namespace wowCVAHK
                     WriteIniFile(colorMappings); // 保存到 INI 文件
 
                 }
-                else if (key == "windowHandle" || key == "coordinate")
+                else if (key == "windowHandle" || key == "coordinate" || key == "deviceCOM")
                 {
                     IniFile ini = new IniFile(Constant.INI_FILE_PATH);
                     // 读取所有映射
@@ -224,7 +239,7 @@ namespace wowCVAHK
                 }
                 else
                 {
-                    MessageBox.Show("Invalid RGB or Key format", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("信息绑定失败", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
 
@@ -338,7 +353,7 @@ namespace wowCVAHK
 
 
                 // 获取屏幕坐标的颜色
-                Color clickedColor = GetColorAt(clickedPosition);
+                Color clickedColor = Utils.GetColorAt(clickedPosition);
 
                 // 关闭全屏窗口
                 this.Close();
@@ -352,18 +367,7 @@ namespace wowCVAHK
                 }
             }
 
-            // 获取屏幕某个点的颜色
-            private Color GetColorAt(Point location)
-            {
-                using (Bitmap bmp = new Bitmap(1, 1))
-                {
-                    using (Graphics g = Graphics.FromImage(bmp))
-                    {
-                        g.CopyFromScreen(location, Point.Empty, new Size(1, 1));
-                    }
-                    return bmp.GetPixel(0, 0);
-                }
-            }
+            
         }
 
         public partial class ControlForm : Form
@@ -386,5 +390,4 @@ namespace wowCVAHK
                 txtColorCoordinate.Text = $"X: {position.X}, Y: {position.Y}";
             }
         }
-
     }
