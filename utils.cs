@@ -166,9 +166,7 @@ namespace wowCVAHK
         }
 
         internal static bool IsHsvWithinTolerance(float currentHue, float currentSaturation, float currentValue, float initialHue, float initialSaturation, float initialValue)
-        {
-            Console.WriteLine($"currentHue = {currentHue}, initialHue = {initialHue}, currentSaturation = {currentSaturation}, initialSaturation = {initialSaturation}, currentValue = {currentValue}, initialValue = {initialValue}");
-
+        {            
             return Math.Abs(currentHue - initialHue) <= Constant.HUETOLERANCE &&
                    Math.Abs(currentSaturation - initialSaturation) <= Constant.SATURATIONTOLERANCE &&
                    Math.Abs(currentValue - initialValue) <= Constant.VALUETOLERANCE;
@@ -189,6 +187,21 @@ namespace wowCVAHK
                 }
             }
             return true;
+        }
+
+        internal static Dictionary<string, object> loadingConfig() 
+        {
+            // 加载配置文件
+            IniFile ini = new IniFile(Constant.INI_FILE_PATH);                                           
+
+            return new Dictionary<string, object>
+            {
+                { "windowHandle" , ini.Get("windowHandle")}, // 获取窗口 ID 
+                { "coordX" , int.Parse(ini.Get("coordinate").Split(',')[0])}, // 窗口坐标X轴
+                { "coordY" , int.Parse(ini.Get("coordinate").Split(',')[1])}, // 窗口坐标Y轴
+                { "arduinoPort" , ini.Get("deviceCOM")}, // 获取串口号
+                { "colorMappings" , ini.GetConfMappings()}, // 读取所有 HSV 与对应结果的映射
+            };
         }
     }
 

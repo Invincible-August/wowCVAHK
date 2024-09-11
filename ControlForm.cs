@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
+using System.IO.Ports;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -6,11 +8,10 @@ namespace wowCVAHK
 {
     public partial class ControlForm : Form
     {
-        public static Thread workerThread;
-        public static bool stopFlag = false;
+        
         public ControlForm()
         {
-            InitializeComponent();
+            InitializeComponent();            
             BaseAPI.RegisterHotKey(this.Handle, 1, Constant.MOD_ALT | Constant.MOD_CONTROL | Constant.MOD_SHIFT, (int)Keys.A); //注册快捷键
             BaseAPI.RegisterHotKey(this.Handle, 2, Constant.MOD_ALT | Constant.MOD_CONTROL | Constant.MOD_SHIFT, (int)Keys.S);
             BaseAPI.RegisterHotKey(this.Handle, 3, Constant.MOD_ALT | Constant.MOD_CONTROL | Constant.MOD_SHIFT, (int)Keys.D);

@@ -38,7 +38,7 @@
             this.stratRunning = new System.Windows.Forms.Button();
             this.stopRunning = new System.Windows.Forms.Button();
             this.bindCom = new System.Windows.Forms.Button();
-            this.txtCom = new System.Windows.Forms.TextBox();
+            this.txtCom = new System.Windows.Forms.TextBox();            
             this.SuspendLayout();
             // 
             // btnSaveBaseInfo
@@ -141,13 +141,13 @@
             this.txtCom.Name = "txtCom";
             this.txtCom.Size = new System.Drawing.Size(120, 23);
             this.txtCom.TabIndex = 10;
-            this.txtCom.TextChanged += new System.EventHandler(this.txtCom_TextChanged);
+            this.txtCom.TextChanged += new System.EventHandler(this.txtCom_TextChanged);            
             // 
             // ControlForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(777, 435);
+            this.ClientSize = new System.Drawing.Size(777, 435);            
             this.Controls.Add(this.txtCom);
             this.Controls.Add(this.bindCom);
             this.Controls.Add(this.stopRunning);
@@ -178,6 +178,6 @@
         private System.Windows.Forms.Button stratRunning;
         private System.Windows.Forms.Button stopRunning;
         private System.Windows.Forms.Button bindCom;
-        private System.Windows.Forms.TextBox txtCom;
+        private System.Windows.Forms.TextBox txtCom;        
     }
 }
