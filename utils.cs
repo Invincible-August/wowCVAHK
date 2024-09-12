@@ -124,7 +124,7 @@ namespace wowCVAHK
             Size phisicalRect = DESKTOP;
             Bitmap tSrcBmp = new Bitmap(phisicalRect.Width, phisicalRect.Height); // 用于屏幕原始图片保存
             Graphics gp = Graphics.FromImage(tSrcBmp);
-            gp.CopyFromScreen(0, 0, 0, 0, phisicalRect);         
+            gp.CopyFromScreen(0, 0, 0, 0, phisicalRect);
 
             if (viewRect.Size != phisicalRect)
             {
@@ -144,7 +144,7 @@ namespace wowCVAHK
         internal static Color GetColorAt(Point location)
         {
             Bitmap screenImage = GetScreenImage();
-            
+
 
             // 检查给定坐标是否在图像范围内
             if (location.X >= 0 && location.X < screenImage.Width && location.Y >= 0 && location.Y < screenImage.Height)
@@ -166,7 +166,7 @@ namespace wowCVAHK
         }
 
         internal static bool IsHsvWithinTolerance(float currentHue, float currentSaturation, float currentValue, float initialHue, float initialSaturation, float initialValue)
-        {            
+        {
             return Math.Abs(currentHue - initialHue) <= Constant.HUETOLERANCE &&
                    Math.Abs(currentSaturation - initialSaturation) <= Constant.SATURATIONTOLERANCE &&
                    Math.Abs(currentValue - initialValue) <= Constant.VALUETOLERANCE;
@@ -189,10 +189,10 @@ namespace wowCVAHK
             return true;
         }
 
-        internal static Dictionary<string, object> loadingConfig() 
+        internal static Dictionary<string, object> loadingConfig()
         {
             // 加载配置文件
-            IniFile ini = new IniFile(Constant.INI_FILE_PATH);                                           
+            IniFile ini = new IniFile(Constant.INI_FILE_PATH);
 
             return new Dictionary<string, object>
             {
@@ -206,124 +206,124 @@ namespace wowCVAHK
     }
 
     internal class IniFile
+    {
+        private Dictionary<string, string> data = new Dictionary<string, string>();
+
+        public IniFile(string filePath)
         {
-            private Dictionary<string, string> data = new Dictionary<string, string>();
-
-            public IniFile(string filePath)
+            // 读取或创建文件内容
+            if (File.Exists(filePath))
             {
-                // 读取或创建文件内容
-                if (File.Exists(filePath))
+                foreach (var line in File.ReadAllLines(filePath))
                 {
-                    foreach (var line in File.ReadAllLines(filePath))
+                    if (line.Contains("="))
                     {
-                        if (line.Contains("="))
-                        {
-                            var parts = line.Split('=');
-                            data[parts[0].Trim()] = parts[1].Trim();
-                        }
+                        var parts = line.Split('=');
+                        data[parts[0].Trim()] = parts[1].Trim();
                     }
                 }
             }
+        }
 
-            internal string Get(string key)
+        internal string Get(string key)
+        {
+            return data.ContainsKey(key) ? data[key] : null;
+        }
+
+        internal Dictionary<string, string> GetConfMappings()
+        {
+            Dictionary<string, string> colorMappings = new Dictionary<string, string>();
+
+            foreach (var entry in data)
             {
-                return data.ContainsKey(key) ? data[key] : null;
+                colorMappings[entry.Key] = entry.Value;
             }
 
-            internal Dictionary<string, string> GetConfMappings()
+            return colorMappings;
+        }
+
+        internal static void saveIni(string key, string value)
+        {
+
+            if (Utils.ValidateHSV(key) && !string.IsNullOrWhiteSpace(value))
             {
-                Dictionary<string, string> colorMappings = new Dictionary<string, string>();
-
-                foreach (var entry in data)
+                IniFile ini = new IniFile(Constant.INI_FILE_PATH);
+                // 读取所有映射
+                Dictionary<string, string> colorMappings = ini.GetConfMappings();
+                // 保存ini信息
+                // 将色块和按键绑定                
+                //******************** 校验 ********************
+                if (colorMappings.ContainsKey(key))
                 {
-                    colorMappings[entry.Key] = entry.Value;
+                    colorMappings.Remove(key);
+
                 }
 
-                return colorMappings;
+                var keyToRemove = colorMappings.FirstOrDefault(kvp => kvp.Value == value.ToUpper()).Key;
+                if (keyToRemove != null)
+                {
+                    colorMappings.Remove(keyToRemove);
+                }
+
+                colorMappings.Add(key, value.ToUpper());
+
+                WriteIniFile(colorMappings); // 保存到 INI 文件
+
             }
-
-            internal static void saveIni(string key, string value)
-            {   
-                
-                if (Utils.ValidateHSV(key) && !string.IsNullOrWhiteSpace(value))
+            else if (key == "windowHandle" || key == "coordinate" || key == "deviceCOM")
+            {
+                IniFile ini = new IniFile(Constant.INI_FILE_PATH);
+                // 读取所有映射
+                Dictionary<string, string> colorMappings = ini.GetConfMappings();
+                if (colorMappings.ContainsKey(key))
                 {
-                    IniFile ini = new IniFile(Constant.INI_FILE_PATH);
-                    // 读取所有映射
-                    Dictionary<string, string> colorMappings = ini.GetConfMappings();
-                    // 保存ini信息
-                    // 将色块和按键绑定                
-                    //******************** 校验 ********************
-                    if (colorMappings.ContainsKey(key))
-                    {
-                        colorMappings.Remove(key);
-
-                    }
-
-                    var keyToRemove = colorMappings.FirstOrDefault(kvp => kvp.Value == value.ToUpper()).Key;
-                    if (keyToRemove != null)
-                    {
-                        colorMappings.Remove(keyToRemove);                        
-                    }
-
-                    colorMappings.Add(key, value.ToUpper());
-                
-                    WriteIniFile(colorMappings); // 保存到 INI 文件
-
-                }
-                else if (key == "windowHandle" || key == "coordinate" || key == "deviceCOM")
-                {
-                    IniFile ini = new IniFile(Constant.INI_FILE_PATH);
-                    // 读取所有映射
-                    Dictionary<string, string> colorMappings = ini.GetConfMappings();
-                    if (colorMappings.ContainsKey(key))
-                    {
-                        colorMappings[key] = value.ToUpper();
-                    }
-                    else
-                    {
-                        colorMappings.Add(key, value.ToUpper());
-                    }
-
-                    WriteIniFile(colorMappings); // 保存到 INI 文件
+                    colorMappings[key] = value.ToUpper();
                 }
                 else
                 {
-                    MessageBox.Show("信息绑定失败", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    colorMappings.Add(key, value.ToUpper());
+                }
+
+                WriteIniFile(colorMappings); // 保存到 INI 文件
+            }
+            else
+            {
+                MessageBox.Show("信息绑定失败", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        internal static string FindKeyByValue(Dictionary<string, string> iniData, string value)
+        {
+            // 查重
+            foreach (var entry in iniData)
+            {
+                if (entry.Value == value)
+                {
+                    return entry.Key;
                 }
             }
+            return null;
+        }
 
-            internal static string FindKeyByValue(Dictionary<string, string> iniData, string value)
+        static void WriteIniFile(Dictionary<string, string> iniData)
+        {
+            //写入ini
+            using (StreamWriter writer = new StreamWriter(Constant.INI_FILE_PATH))
             {
-                // 查重
                 foreach (var entry in iniData)
                 {
-                    if (entry.Value == value)
-                    {
-                        return entry.Key;
-                    }
+                    writer.WriteLine($"{entry.Key} = {entry.Value}");
                 }
-                return null;
             }
-
-            static void WriteIniFile(Dictionary<string, string> iniData)
-            {
-                //写入ini
-                using (StreamWriter writer = new StreamWriter(Constant.INI_FILE_PATH))
-                {
-                    foreach (var entry in iniData)
-                    {
-                        writer.WriteLine($"{entry.Key} = {entry.Value}");
-                    }
-                }
-            }            
+        }
     }
 
     internal class FullScreenOverlay : Form
+    {
+        private Point mousePosition;
+        private Bitmap screenCapture;
+        public FullScreenOverlay()
         {
-            private Point mousePosition;
-            private Bitmap screenCapture;
-            public FullScreenOverlay()
-            {
             this.DoubleBuffered = true;
             this.FormBorderStyle = FormBorderStyle.None;
             this.WindowState = FormWindowState.Maximized;
@@ -336,7 +336,7 @@ namespace wowCVAHK
 
             this.MouseMove += new MouseEventHandler(OnMouseMove); // 监听鼠标移动事件
             this.MouseDoubleClick += new MouseEventHandler(OnMouseDoubleClick); // 监听双击事件
-            }
+        }
 
         private void OnMouseMove(object sender, MouseEventArgs e)
         {
@@ -366,60 +366,60 @@ namespace wowCVAHK
         }
 
         private Bitmap CaptureScreen()
-            {
-                return screenCapture = Utils.GetScreenImage();              
-            }
-
-            // 获取鼠标双击位置和颜色
-            private void OnMouseDoubleClick(object sender, MouseEventArgs e)
-            {
-                float initialHue, initialSaturation, initialValue;
-                Point clickedPosition = e.Location;
-
-                // 将屏幕坐标转换为窗口内的坐标
-                Point ClientLocation = Utils.ChangeCoordinate(clickedPosition);                
-
-                IniFile.saveIni("coordinate", $"{clickedPosition.X},{clickedPosition.Y}");
-
-
-                // 获取屏幕坐标的颜色
-                Color clickedColor = Utils.GetColorAt(clickedPosition);
-                Utils.RgbToHsv(clickedColor, out initialHue, out initialSaturation, out initialValue);
-            
-                // 关闭全屏窗口
-                this.Close();
-
-                // 显示坐标和颜色信息到主窗口的文本框
-                ControlForm mainForm = Application.OpenForms["ControlForm"] as ControlForm;
-                if (mainForm != null)
-                {
-                    mainForm.DisplayClickedColorInfo(initialHue, initialSaturation, initialValue);
-                    mainForm.DisplayClickedCoordinateInfo(ClientLocation);
-                }
-            }
-            
-
-
-    }
-
-        public partial class ControlForm : Form
         {
-            public void DisplayClickedColorInfo(float initialHue, float initialSaturation, float initialValue)
-            {
-                // 在文本框中显示颜色信息
-                txtColor.Text = $"{initialHue},{initialSaturation},{initialValue}";
-            }
+            return screenCapture = Utils.GetScreenImage();
+        }
 
-            public void DisplayClickedWindowHandleInfo(string title)
-            {
-                // 在文本框中显示窗口名称
-                txtWindowHandle.Text = $"{title}";
-            }
+        // 获取鼠标双击位置和颜色
+        private void OnMouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            float initialHue, initialSaturation, initialValue;
+            Point clickedPosition = e.Location;
 
-            public void DisplayClickedCoordinateInfo(Point position)
+            // 将屏幕坐标转换为窗口内的坐标
+            Point ClientLocation = Utils.ChangeCoordinate(clickedPosition);
+
+            IniFile.saveIni("coordinate", $"{clickedPosition.X},{clickedPosition.Y}");
+
+
+            // 获取屏幕坐标的颜色
+            Color clickedColor = Utils.GetColorAt(clickedPosition);
+            Utils.RgbToHsv(clickedColor, out initialHue, out initialSaturation, out initialValue);
+
+            // 关闭全屏窗口
+            this.Close();
+
+            // 显示坐标和颜色信息到主窗口的文本框
+            ControlForm mainForm = Application.OpenForms["ControlForm"] as ControlForm;
+            if (mainForm != null)
             {
-                // 在文本框中显示坐标
-                txtColorCoordinate.Text = $"X: {position.X}, Y: {position.Y}";
+                mainForm.DisplayClickedColorInfo(initialHue, initialSaturation, initialValue);
+                mainForm.DisplayClickedCoordinateInfo(ClientLocation);
             }
         }
+
+
+
     }
+
+    public partial class ControlForm : Form
+    {
+        public void DisplayClickedColorInfo(float initialHue, float initialSaturation, float initialValue)
+        {
+            // 在文本框中显示颜色信息
+            txtColor.Text = $"{initialHue},{initialSaturation},{initialValue}";
+        }
+
+        public void DisplayClickedWindowHandleInfo(string title)
+        {
+            // 在文本框中显示窗口名称
+            txtWindowHandle.Text = $"{title}";
+        }
+
+        public void DisplayClickedCoordinateInfo(Point position)
+        {
+            // 在文本框中显示坐标
+            txtColorCoordinate.Text = $"X: {position.X}, Y: {position.Y}";
+        }
+    }
+}

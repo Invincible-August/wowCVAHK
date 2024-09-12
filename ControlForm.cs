@@ -8,10 +8,10 @@ namespace wowCVAHK
 {
     public partial class ControlForm : Form
     {
-        
+
         public ControlForm()
         {
-            InitializeComponent();            
+            InitializeComponent();
             BaseAPI.RegisterHotKey(this.Handle, 1, Constant.MOD_ALT | Constant.MOD_CONTROL | Constant.MOD_SHIFT, (int)Keys.A); //注册快捷键
             BaseAPI.RegisterHotKey(this.Handle, 2, Constant.MOD_ALT | Constant.MOD_CONTROL | Constant.MOD_SHIFT, (int)Keys.S);
             BaseAPI.RegisterHotKey(this.Handle, 3, Constant.MOD_ALT | Constant.MOD_CONTROL | Constant.MOD_SHIFT, (int)Keys.D);
@@ -64,7 +64,7 @@ namespace wowCVAHK
         }
 
         private void stratRunning_Click(object sender, EventArgs e)
-        {            
+        {
             ButtonControl.running();
         }
 

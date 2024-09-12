@@ -38,7 +38,8 @@ namespace wowCVAHK
         internal static void running()
         {
             TreadManagement hsvDetection = new TreadManagement();
-            hsvDetection.StartDetection();
+            Program.runningThread = new Thread(new ThreadStart(hsvDetection.StartDetection));
+            Program.runningThread.Start();
         }
 
             internal static void bindCOM(string deviceCOM) 
