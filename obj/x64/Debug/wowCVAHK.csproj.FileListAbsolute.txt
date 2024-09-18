@@ -74,3 +74,4 @@ E:\Download\github\wowCVAHK\obj\x64\Debug\wowCVAHK.csproj.CoreCompileInputs.cach
 E:\Download\github\wowCVAHK\obj\x64\Debug\wowCVAHK.csproj.Up2Date
 E:\Download\github\wowCVAHK\obj\x64\Debug\wowCVAHK.exe
 E:\Download\github\wowCVAHK\obj\x64\Debug\wowCVAHK.pdb
+F:\Downloads\github\wowCVAHK\bin\x64\Debug\Gma.System.MouseKeyHook.dll

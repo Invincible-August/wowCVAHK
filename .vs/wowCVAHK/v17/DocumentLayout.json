@@ -7,20 +7,28 @@
       "RelativeMoniker": "D:0:0:{4563F1F3-616C-43EE-B5D4-74D1016E5C59}|wowCVAHK.csproj|solutionrelative:utils.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4563F1F3-616C-43EE-B5D4-74D1016E5C59}|wowCVAHK.csproj|F:\\Downloads\\github\\wowCVAHK\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4563F1F3-616C-43EE-B5D4-74D1016E5C59}|wowCVAHK.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4563F1F3-616C-43EE-B5D4-74D1016E5C59}|wowCVAHK.csproj|F:\\Downloads\\github\\wowCVAHK\\ControlForm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4563F1F3-616C-43EE-B5D4-74D1016E5C59}|wowCVAHK.csproj|solutionrelative:ControlForm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4563F1F3-616C-43EE-B5D4-74D1016E5C59}|wowCVAHK.csproj|f:\\downloads\\github\\wowcvahk\\treadmanagement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4563F1F3-616C-43EE-B5D4-74D1016E5C59}|wowCVAHK.csproj|solutionrelative:treadmanagement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4563F1F3-616C-43EE-B5D4-74D1016E5C59}|wowCVAHK.csproj|F:\\Downloads\\github\\wowCVAHK\\controlform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4563F1F3-616C-43EE-B5D4-74D1016E5C59}|wowCVAHK.csproj|solutionrelative:controlform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4563F1F3-616C-43EE-B5D4-74D1016E5C59}|wowCVAHK.csproj|F:\\Downloads\\github\\wowCVAHK\\controlform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4563F1F3-616C-43EE-B5D4-74D1016E5C59}|wowCVAHK.csproj|solutionrelative:controlform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4563F1F3-616C-43EE-B5D4-74D1016E5C59}|wowCVAHK.csproj|f:\\downloads\\github\\wowcvahk\\threadmanagement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4563F1F3-616C-43EE-B5D4-74D1016E5C59}|wowCVAHK.csproj|solutionrelative:threadmanagement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{4563F1F3-616C-43EE-B5D4-74D1016E5C59}|wowCVAHK.csproj|F:\\Downloads\\github\\wowCVAHK\\buttoncontrol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4563F1F3-616C-43EE-B5D4-74D1016E5C59}|wowCVAHK.csproj|solutionrelative:buttoncontrol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4563F1F3-616C-43EE-B5D4-74D1016E5C59}|wowCVAHK.csproj|F:\\Downloads\\github\\wowCVAHK\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4563F1F3-616C-43EE-B5D4-74D1016E5C59}|wowCVAHK.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4563F1F3-616C-43EE-B5D4-74D1016E5C59}|wowCVAHK.csproj|F:\\Downloads\\github\\wowCVAHK\\controlform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{4563F1F3-616C-43EE-B5D4-74D1016E5C59}|wowCVAHK.csproj|solutionrelative:controlform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     }
   ],
   "DocumentGroupContainers": [
@@ -40,7 +48,7 @@
               "RelativeDocumentMoniker": "utils.cs",
               "ToolTip": "F:\\Downloads\\github\\wowCVAHK\\utils.cs",
               "RelativeToolTip": "utils.cs",
-              "ViewState": "AgIAAHkBAAAAAAAAAAAkwIUBAAAHAAAAAAAAAA==",
+              "ViewState": "AgIAALUBAAAAAAAAAAAkwLUBAAAoAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-09-09T07:03:04.125Z",
               "IsPinned": true,
@@ -49,28 +57,27 @@
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "TreadManagement.cs",
-              "DocumentMoniker": "F:\\Downloads\\github\\wowCVAHK\\TreadManagement.cs",
-              "RelativeDocumentMoniker": "TreadManagement.cs",
-              "ToolTip": "F:\\Downloads\\github\\wowCVAHK\\TreadManagement.cs",
-              "RelativeToolTip": "TreadManagement.cs",
-              "ViewState": "AgIAABcAAAAAAAAAAAAAwDAAAAAFAAAAAAAAAA==",
+              "Title": "ControlForm.Designer.cs",
+              "DocumentMoniker": "F:\\Downloads\\github\\wowCVAHK\\ControlForm.Designer.cs",
+              "RelativeDocumentMoniker": "ControlForm.Designer.cs",
+              "ToolTip": "F:\\Downloads\\github\\wowCVAHK\\ControlForm.Designer.cs",
+              "RelativeToolTip": "ControlForm.Designer.cs",
+              "ViewState": "AgIAAAIBAAAAAAAAAAAtwBsBAAAxAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-11T07:53:42.102Z",
+              "WhenOpened": "2024-09-18T02:57:07.25Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Program.cs",
-              "DocumentMoniker": "F:\\Downloads\\github\\wowCVAHK\\Program.cs",
-              "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "F:\\Downloads\\github\\wowCVAHK\\Program.cs",
-              "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB4AAAABAAAAAAAAAA==",
+              "DocumentIndex": 6,
+              "Title": "ControlForm.cs [\u8BBE\u8BA1]",
+              "DocumentMoniker": "F:\\Downloads\\github\\wowCVAHK\\ControlForm.cs",
+              "RelativeDocumentMoniker": "ControlForm.cs",
+              "ToolTip": "F:\\Downloads\\github\\wowCVAHK\\ControlForm.cs [\u8BBE\u8BA1]",
+              "RelativeToolTip": "ControlForm.cs [\u8BBE\u8BA1]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-11T06:37:40.965Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-18T02:51:33.722Z",
+              "EditorCaption": " [\u8BBE\u8BA1]"
             },
             {
               "$type": "Document",
@@ -80,20 +87,44 @@
               "RelativeDocumentMoniker": "ButtonControl.cs",
               "ToolTip": "F:\\Downloads\\github\\wowCVAHK\\ButtonControl.cs",
               "RelativeToolTip": "ButtonControl.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACkAAAAqAAAAAAAAAA==",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAYwD0AAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-11T02:24:44.67Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-18T01:52:59.785Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
+              "Title": "ThreadManagement.cs",
+              "DocumentMoniker": "F:\\Downloads\\github\\wowCVAHK\\ThreadManagement.cs",
+              "RelativeDocumentMoniker": "ThreadManagement.cs",
+              "ToolTip": "F:\\Downloads\\github\\wowCVAHK\\ThreadManagement.cs",
+              "RelativeToolTip": "ThreadManagement.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAD8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-11T07:53:42.102Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Program.cs",
+              "DocumentMoniker": "F:\\Downloads\\github\\wowCVAHK\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "F:\\Downloads\\github\\wowCVAHK\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAjwBUAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-11T06:37:40.965Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "ControlForm.cs",
               "DocumentMoniker": "F:\\Downloads\\github\\wowCVAHK\\ControlForm.cs",
               "RelativeDocumentMoniker": "ControlForm.cs",
               "ToolTip": "F:\\Downloads\\github\\wowCVAHK\\ControlForm.cs",
               "RelativeToolTip": "ControlForm.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFcAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAKQAAAAAAAAAAAAowBkBAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-09-09T13:34:26.191Z",
               "EditorCaption": ""

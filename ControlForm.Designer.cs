@@ -38,7 +38,15 @@
             this.stratRunning = new System.Windows.Forms.Button();
             this.stopRunning = new System.Windows.Forms.Button();
             this.bindCom = new System.Windows.Forms.Button();
-            this.txtCom = new System.Windows.Forms.TextBox();            
+            this.txtCom = new System.Windows.Forms.TextBox();
+            this.battleKey = new System.Windows.Forms.Button();
+            this.hotKeyType = new System.Windows.Forms.ComboBox();
+            this.txtBattleKey = new System.Windows.Forms.TextBox();
+            this.confirm = new System.Windows.Forms.Button();
+            this.pauseRunning = new System.Windows.Forms.Button();
+            this.continueRunning = new System.Windows.Forms.Button();
+            this.btnLogInfo = new System.Windows.Forms.Button();
+            this.txtLogInfo = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
             // 
             // btnSaveBaseInfo
@@ -85,6 +93,7 @@
             this.txtBindKey.Location = new System.Drawing.Point(12, 99);
             this.txtBindKey.Multiline = true;
             this.txtBindKey.Name = "txtBindKey";
+            this.txtBindKey.ReadOnly = true;
             this.txtBindKey.Size = new System.Drawing.Size(120, 23);
             this.txtBindKey.TabIndex = 4;
             // 
@@ -106,7 +115,7 @@
             // 
             // stratRunning
             // 
-            this.stratRunning.Location = new System.Drawing.Point(12, 157);
+            this.stratRunning.Location = new System.Drawing.Point(12, 186);
             this.stratRunning.Name = "stratRunning";
             this.stratRunning.Size = new System.Drawing.Size(120, 23);
             this.stratRunning.TabIndex = 7;
@@ -116,7 +125,7 @@
             // 
             // stopRunning
             // 
-            this.stopRunning.Location = new System.Drawing.Point(138, 157);
+            this.stopRunning.Location = new System.Drawing.Point(138, 186);
             this.stopRunning.Name = "stopRunning";
             this.stopRunning.Size = new System.Drawing.Size(120, 23);
             this.stopRunning.TabIndex = 8;
@@ -141,13 +150,99 @@
             this.txtCom.Name = "txtCom";
             this.txtCom.Size = new System.Drawing.Size(120, 23);
             this.txtCom.TabIndex = 10;
-            this.txtCom.TextChanged += new System.EventHandler(this.txtCom_TextChanged);            
+            // 
+            // battleKey
+            // 
+            this.battleKey.Location = new System.Drawing.Point(138, 157);
+            this.battleKey.Name = "battleKey";
+            this.battleKey.Size = new System.Drawing.Size(120, 23);
+            this.battleKey.TabIndex = 11;
+            this.battleKey.Text = "战斗中快捷键";
+            this.battleKey.UseVisualStyleBackColor = true;
+            this.battleKey.Click += new System.EventHandler(this.battleKey_Click);
+            // 
+            // hotKeyType
+            // 
+            this.hotKeyType.FormattingEnabled = true;
+            this.hotKeyType.Items.AddRange(new object[] {
+            "按住触发",
+            "按下触发"});
+            this.hotKeyType.Location = new System.Drawing.Point(264, 160);
+            this.hotKeyType.Name = "hotKeyType";
+            this.hotKeyType.Size = new System.Drawing.Size(120, 20);
+            this.hotKeyType.TabIndex = 13;
+            // 
+            // txtBattleKey
+            // 
+            this.txtBattleKey.Location = new System.Drawing.Point(12, 157);
+            this.txtBattleKey.Multiline = true;
+            this.txtBattleKey.Name = "txtBattleKey";
+            this.txtBattleKey.ReadOnly = true;
+            this.txtBattleKey.Size = new System.Drawing.Size(120, 23);
+            this.txtBattleKey.TabIndex = 14;
+            // 
+            // confirm
+            // 
+            this.confirm.Location = new System.Drawing.Point(391, 160);
+            this.confirm.Name = "confirm";
+            this.confirm.Size = new System.Drawing.Size(50, 23);
+            this.confirm.TabIndex = 15;
+            this.confirm.Text = "确认";
+            this.confirm.UseVisualStyleBackColor = true;
+            this.confirm.Click += new System.EventHandler(this.confirm_Click);
+            // 
+            // pauseRunning
+            // 
+            this.pauseRunning.Location = new System.Drawing.Point(138, 215);
+            this.pauseRunning.Name = "pauseRunning";
+            this.pauseRunning.Size = new System.Drawing.Size(120, 23);
+            this.pauseRunning.TabIndex = 16;
+            this.pauseRunning.Text = "暂停";
+            this.pauseRunning.UseVisualStyleBackColor = true;
+            this.pauseRunning.Click += new System.EventHandler(this.pauseRunning_Click);
+            // 
+            // continueRunning
+            // 
+            this.continueRunning.Location = new System.Drawing.Point(12, 215);
+            this.continueRunning.Name = "continueRunning";
+            this.continueRunning.Size = new System.Drawing.Size(120, 23);
+            this.continueRunning.TabIndex = 17;
+            this.continueRunning.Text = "继续";
+            this.continueRunning.UseVisualStyleBackColor = true;
+            this.continueRunning.Click += new System.EventHandler(this.continueRunning_Click);
+            // 
+            // btnLogInfo
+            // 
+            this.btnLogInfo.Location = new System.Drawing.Point(264, 186);
+            this.btnLogInfo.Name = "btnLogInfo";
+            this.btnLogInfo.Size = new System.Drawing.Size(75, 23);
+            this.btnLogInfo.TabIndex = 18;
+            this.btnLogInfo.Text = "显示日志";
+            this.btnLogInfo.UseVisualStyleBackColor = true;
+            this.btnLogInfo.Click += new System.EventHandler(this.btnLogInfo_Click);
+            // 
+            // txtLogInfo
+            // 
+            this.txtLogInfo.Location = new System.Drawing.Point(264, 14);
+            this.txtLogInfo.Name = "txtLogInfo";
+            this.txtLogInfo.Size = new System.Drawing.Size(205, 137);
+            this.txtLogInfo.TabIndex = 19;
+            this.txtLogInfo.Text = "";
+            this.txtLogInfo.Visible = false;
             // 
             // ControlForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(777, 435);            
+            this.ClientSize = new System.Drawing.Size(481, 256);
+            this.Controls.Add(this.txtLogInfo);
+            this.Controls.Add(this.btnLogInfo);
+            this.Controls.Add(this.continueRunning);
+            this.Controls.Add(this.pauseRunning);
+            this.Controls.Add(this.confirm);
+            this.Controls.Add(this.txtBattleKey);
+            this.Controls.Add(this.hotKeyType);
+            this.Controls.Add(this.battleKey);
             this.Controls.Add(this.txtCom);
             this.Controls.Add(this.bindCom);
             this.Controls.Add(this.stopRunning);
@@ -178,6 +273,14 @@
         private System.Windows.Forms.Button stratRunning;
         private System.Windows.Forms.Button stopRunning;
         private System.Windows.Forms.Button bindCom;
-        private System.Windows.Forms.TextBox txtCom;        
+        private System.Windows.Forms.TextBox txtCom;
+        private System.Windows.Forms.Button battleKey;        
+        private System.Windows.Forms.ComboBox hotKeyType;
+        private System.Windows.Forms.TextBox txtBattleKey;
+        private System.Windows.Forms.Button confirm;
+        private System.Windows.Forms.Button pauseRunning;
+        private System.Windows.Forms.Button continueRunning;
+        private System.Windows.Forms.Button btnLogInfo;
+        private System.Windows.Forms.RichTextBox txtLogInfo;
     }
 }

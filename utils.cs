@@ -200,6 +200,8 @@ namespace wowCVAHK
                 { "coordX" , int.Parse(ini.Get("coordinate").Split(',')[0])}, // 窗口坐标X轴
                 { "coordY" , int.Parse(ini.Get("coordinate").Split(',')[1])}, // 窗口坐标Y轴
                 { "arduinoPort" , ini.Get("deviceCOM")}, // 获取串口号
+                { "battleHotKey" , ini.Get("battleHotKey")}, // 战斗快捷键
+                { "battleHotKeyType" , ini.Get("battleHotKeyType")}, // 快捷键类型
                 { "colorMappings" , ini.GetConfMappings()}, // 读取所有 HSV 与对应结果的映射
             };
         }
@@ -216,9 +218,9 @@ namespace wowCVAHK
             {
                 foreach (var line in File.ReadAllLines(filePath))
                 {
-                    if (line.Contains("="))
+                    if (line.Contains(":"))
                     {
-                        var parts = line.Split('=');
+                        var parts = line.Split(':');
                         data[parts[0].Trim()] = parts[1].Trim();
                     }
                 }
@@ -270,7 +272,7 @@ namespace wowCVAHK
                 WriteIniFile(colorMappings); // 保存到 INI 文件
 
             }
-            else if (key == "windowHandle" || key == "coordinate" || key == "deviceCOM")
+            else if (key == "windowHandle" || key == "coordinate" || key == "deviceCOM" || key == "battleHotKey" || key == "battleHotKeyType")
             {
                 IniFile ini = new IniFile(Constant.INI_FILE_PATH);
                 // 读取所有映射
@@ -312,7 +314,7 @@ namespace wowCVAHK
             {
                 foreach (var entry in iniData)
                 {
-                    writer.WriteLine($"{entry.Key} = {entry.Value}");
+                    writer.WriteLine($"{entry.Key} : {entry.Value}");
                 }
             }
         }
@@ -420,6 +422,63 @@ namespace wowCVAHK
         {
             // 在文本框中显示坐标
             txtColorCoordinate.Text = $"X: {position.X}, Y: {position.Y}";
+        }
+
+        public void DisplayKeyWordeInfo(string keyWord)
+        {
+            // 在文本框中显示坐标
+            txtBindKey.Text = keyWord;
+        }
+    }
+
+    public class LogManager 
+    {
+        private static StringWriter logStream = new StringWriter();
+        private static RichTextBox logTextBox;
+        public static bool isLogVisible;
+
+        // 初始化，设置TextBox并重定向Console输出
+        public static void Initialize(RichTextBox textBox)
+        {
+            logTextBox = textBox;
+            Console.SetOut(logStream);
+            logTextBox.Visible = false;
+        }
+
+        public static void Log(string message)
+        {
+            Console.WriteLine(message);
+            UpdateLog();
+        }
+
+        public static void UpdateLog()
+        {
+            if (logTextBox.InvokeRequired)
+            {
+                logTextBox.Invoke(new Action(() =>
+                {
+                    logTextBox.Text = logStream.ToString();
+                }));
+            }
+            else
+            {
+                logTextBox.Text = logStream.ToString();
+            }
+        }
+
+        public static void ToggleLog()
+        {
+            if (logTextBox.InvokeRequired)
+            {
+                logTextBox.Invoke(new Action(() =>
+                {
+                    logTextBox.Visible = !logTextBox.Visible;
+                }));
+            }
+            else
+            {
+                logTextBox.Visible = !logTextBox.Visible;
+            }
         }
     }
 }

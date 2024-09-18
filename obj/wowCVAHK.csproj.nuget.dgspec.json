@@ -58,6 +58,10 @@
             "Emgu.CV.runtime.windows": {
               "target": "Package",
               "version": "[4.9.0.5494, )"
+            },
+            "MouseKeyHook": {
+              "target": "Package",
+              "version": "[5.7.1, )"
             }
           }
         }

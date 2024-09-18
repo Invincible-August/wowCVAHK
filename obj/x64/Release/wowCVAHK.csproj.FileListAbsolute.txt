@@ -36,3 +36,4 @@ F:\Downloads\github\wowCVAHK\bin\x64\Release\System.ValueTuple.dll
 F:\Downloads\github\wowCVAHK\obj\x64\Release\wowCVAHK.csproj.Up2Date
 F:\Downloads\github\wowCVAHK\obj\x64\Release\wowCVAHK.exe
 F:\Downloads\github\wowCVAHK\obj\x64\Release\wowCVAHK.pdb
+F:\Downloads\github\wowCVAHK\bin\x64\Release\Gma.System.MouseKeyHook.dll

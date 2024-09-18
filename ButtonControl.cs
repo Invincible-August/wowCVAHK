@@ -15,8 +15,9 @@ using wowCVAHK;
 namespace wowCVAHK
 {
     internal class ButtonControl
-    {
-        internal static string saveWindowHandle()
+    {        
+        private ThreadManagement hsvDetection;
+        internal static string SaveWindowHandle()
         {
             // 获取最上方窗口句柄
             IntPtr handle = BaseAPI.GetForegroundWindow();
@@ -35,14 +36,43 @@ namespace wowCVAHK
             IniFile.saveIni(colorInfo, keyInfo);
         }
 
-        internal static void running()
+        internal static void SaveBattleHotKey(string hotKey) 
         {
-            TreadManagement hsvDetection = new TreadManagement();
+            IniFile.saveIni("battleHotKey", hotKey);
+        }
+
+        internal static void SaveBattleHotKeyType(string type)
+        {
+            IniFile.saveIni("battleHotKeyType", type);
+        }
+
+        internal void running()
+        {
+            Program.stopFlag = false;
+            hsvDetection = new ThreadManagement();
             Program.runningThread = new Thread(new ThreadStart(hsvDetection.StartDetection));
             Program.runningThread.Start();
         }
 
-            internal static void bindCOM(string deviceCOM) 
+        // 暂停检测
+        public void PauseDetection()
+        {
+            if (hsvDetection != null)
+            {
+                hsvDetection.Pause();
+            }
+        }
+
+        // 恢复检测
+        public void ResumeDetection()
+        {
+            if (hsvDetection != null)
+            {
+                hsvDetection.Resume();
+            }
+        }
+
+        internal static void bindCOM(string deviceCOM) 
         {            
             IniFile.saveIni("deviceCOM", deviceCOM.ToUpper());            
         }
@@ -50,6 +80,6 @@ namespace wowCVAHK
         internal static void stop() 
         {
             Program.stopFlag = true;            
-        }      
+        }
     }
 }
